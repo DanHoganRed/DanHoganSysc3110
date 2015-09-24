@@ -36,5 +36,5 @@ public class BuddyInfo {
 	public void setPhonenumber(long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-
+	/* Test */
 }
