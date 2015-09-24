@@ -1,4 +1,4 @@
-
+/*Hello*/
 public class BuddyInfo {
 	private String name;
 	private int age;
