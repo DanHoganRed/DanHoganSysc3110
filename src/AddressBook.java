@@ -1,23 +1,15 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
+import javax.swing.*;  
 
 public class AddressBook {
 	
 	ArrayList<BuddyInfo> Book = new ArrayList<BuddyInfo>();
+	
 	public static void main(String[] args) {
-		System.out.println("Address Book!\n");
-		
-		AddressBook AB = new AddressBook();
-		BuddyInfo BI = new BuddyInfo();
-		
-		BI.setName("Sam");
-		BI.setAge(20);
-		BI.setPhonenumber(5555555);
-		System.out.println("Hello " + BI.getName()+"\n");
-		
-		AB.addBuddy(BI);
-		AB.removeBuddy(BI);
-
+		GUI G = new GUI();
 	}
 	
 	public void addBuddy(BuddyInfo Buddy){
@@ -27,5 +19,19 @@ public class AddressBook {
 	public void removeBuddy(BuddyInfo Buddy){
 		this.Book.remove(Buddy);
 	}
-
+	
+	public String listToString()
+	{
+		String s = "Friends: \n";
+		for(BuddyInfo B:Book){
+			s += "Name: ";
+			s += B.getName();
+			s += "\nAge: ";
+			s += B.getAge();
+			s += "\nPhone Number: ";
+			s += B.getPhonenumber();
+			s += "\n";
+		}
+		return s;	
+	}
 }
