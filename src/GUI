@@ -1,0 +1,108 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.*;
+
+import javax.swing.*;  
+
+public class GUI implements ActionListener {
+	private JFrame f;
+	private JMenuBar mb;
+	private JMenu address;
+	private JMenu buddy;
+	private JMenuItem create;
+	private JMenuItem save;
+	private JMenuItem display;
+	private JMenuItem add;
+	private AddressBook A;
+	private JLabel field;
+	private JTextArea stream;
+	private BuddyInfo dummy;
+	
+	public GUI (){
+		f=new JFrame();//creating instance of JFrame  
+		mb = new JMenuBar();
+		field = new JLabel();
+		stream = new JTextArea();
+		address = new JMenu("Address Book");
+		buddy = new JMenu("Buddy Options");
+		
+		address.setMnemonic(KeyEvent.VK_A);
+		address.getAccessibleContext().setAccessibleDescription(
+		        "AddressBook Options");
+		
+		create = new JMenuItem("Create Address Book",
+	            KeyEvent.VK_T);
+		create.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		create.addActionListener(this);
+		
+		display = new JMenuItem("Display Address Book",
+	            KeyEvent.VK_T);
+		display.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		display.addActionListener(this);
+		
+		add = new JMenuItem("Add Buddy",
+	            KeyEvent.VK_T);
+		add.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		add.addActionListener(this);
+		
+		save = new JMenuItem("Save Address Book",
+	            KeyEvent.VK_T);
+		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		save.addActionListener(this);
+		
+		address.add(create);
+		address.add(save);
+		address.add(display);
+		buddy.add(add);
+		mb.add(address);
+		mb.add(buddy);
+		f.add(stream);
+		f.add(field, BorderLayout.SOUTH); 
+		f.setJMenuBar(mb);
+		f.setSize(400,500);
+		f.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == create)
+		{
+			A = new AddressBook();
+			field.setText("New Address Book Created");
+			stream.setText("");
+		}
+		
+		if(e.getSource() == display)
+		{
+			if(A == null)
+				stream.setText("No Address book Created");
+			else
+				stream.setText(A.listToString());
+		}
+		
+		if(e.getSource() == save)
+		{
+			if(A == null)
+				stream.setText("No Address book Created");
+			else
+				field.setText("Address Book Saved");
+				stream.setText("");
+		}
+			
+		if(e.getSource() == add)
+		{
+			if(A == null)
+				stream.setText("No Address book Created");
+			else
+			{
+				dummy = new BuddyInfo();
+				dummy.setName(JOptionPane.showInputDialog("Please enter the buddy's name"));
+				dummy.setAge(Integer.parseInt(JOptionPane.showInputDialog("Please enter the buddy's age")));
+				dummy.setPhonenumber(Integer.parseInt(JOptionPane.showInputDialog("Please enter the buddy's phone number")));
+				A.addBuddy(dummy);
+			}
+		}
+	}
+}
