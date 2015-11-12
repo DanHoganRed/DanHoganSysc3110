@@ -1,0 +1,95 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+/**
+ * Created by daniel on 2015-11-12.
+ */
+public class GUI extends JFrame implements ActionListener {
+    JFrame frame;
+    JPanel panel;
+    JButton[][] button;
+    Game g;
+    JLabel label;
+    private JMenuBar mb;
+    private JMenuItem create;
+
+    public GUI ()
+    {
+        frame = new JFrame();
+        panel = new JPanel(new GridLayout(3,3));
+        button = new JButton[3][3];
+        label = new JLabel("TicTacToa");
+        for(int i =0; i<3;i++)
+        {
+            for(int n=0;n<3;n++)
+            {
+                button[i][n] = new JButton("");
+                button[i][n].addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        buttonPressed(e);
+                    }
+                });
+
+                panel.add(button[i][n]);
+            }
+        }
+
+        create = new JMenuItem("Create Address Book",
+                KeyEvent.VK_T);
+        create.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+        create.addActionListener(this);
+
+        mb.add(create);
+        frame.setJMenuBar(mb);
+        frame.add(panel);
+        frame.add(label);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.setVisible(true);
+    }
+
+    void buttonPressed(ActionEvent e){
+        if(g != null) {
+            if (e.getSource() instanceof JButton) {
+                JButton b = (JButton) e.getSource();
+                b.setText(g.getTurn());
+                b.setEnabled(false);
+                if (g.hasWon()) {
+                    label.setText(g.getTurn() + "'s have won!");
+                    this.disableButtons();
+                } else {
+                    g.nextTurn();
+                }
+            }
+        }
+        else
+            label.setText("No game created.");
+    }
+
+    private void disableButtons(){
+        for(int i =0; i<3;i++)
+        {
+            for(int n=0;n<3;n++)
+            {
+                button[i][n].setEnabled(false);
+            }
+        }
+    }
+
+    public static void main(String[] Args)
+    {
+        GUI g = new GUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == create)
+        {
+            g = new Game();
+            label.setText("New TicTacToe Game Created");
+        }
+    }
+}
