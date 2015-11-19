@@ -3,18 +3,34 @@ public class BuddyInfo {
 	private String name;
 	private int age;
 	private long phonenumber;
-
-	public static void main(String[] args) {
-		BuddyInfo BI = new BuddyInfo();
-		BI.setName("Sam");
-		BI.setAge(20);
-		BI.setPhonenumber(5555555);
-		System.out.println("Hello " + BI.getName()+"\n");
-
+	
+	BuddyInfo()
+	{
+		name = null;
+		age = 0;
+		phonenumber= 0;
 	}
-
+	
+	BuddyInfo(String name, int age, int phonenumber)
+	{
+		this.name = name;
+		this.age = age;
+		this.phonenumber = phonenumber;
+	}
+	
+	BuddyInfo(BuddyInfo buddy)
+	{
+		this.name = buddy.getName();
+		this.age = buddy.getAge();
+		this.phonenumber = buddy.getPhonenumber();
+	}
+	
 	public String getName() {
 		return name;
+	}
+	
+	public String getGreeting() {
+		return "Hello " + name;
 	}
 
 	public void setName(String name) {
@@ -28,6 +44,10 @@ public class BuddyInfo {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+	public boolean Over18() {
+		return this.age>18;
+	}
 
 	public long getPhonenumber() {
 		return phonenumber;
@@ -36,5 +56,19 @@ public class BuddyInfo {
 	public void setPhonenumber(long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-	/* Test */
+	
+	public static BuddyInfo Import(String s)
+	{
+		String[] buddy = s.split("$");
+		BuddyInfo b = new BuddyInfo(buddy[0],Integer.parseInt(buddy[1]),Integer.parseInt(buddy[2]));
+		return b;
+	}
+	
+	public String listToString() {
+		String s = "";
+		s += this.getName() + "$";
+		s += this.getAge() + "$";
+		s += this.getPhonenumber();
+		return s;
+	}
 }
