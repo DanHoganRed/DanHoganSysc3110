@@ -1,5 +1,7 @@
+import java.io.Serializable;
+
 /*Hello Test*/
-public class BuddyInfo {
+public class BuddyInfo implements Serializable{
 	private String name;
 	private int age;
 	private long phonenumber;
@@ -59,16 +61,16 @@ public class BuddyInfo {
 	
 	public static BuddyInfo Import(String s)
 	{
-		String[] buddy = s.split("$");
+		String[] buddy = s.split("\\$");
 		BuddyInfo b = new BuddyInfo(buddy[0],Integer.parseInt(buddy[1]),Integer.parseInt(buddy[2]));
 		return b;
 	}
 	
-	public String listToString() {
+	public String toString() {
 		String s = "";
-		s += this.getName() + "$";
-		s += this.getAge() + "$";
-		s += this.getPhonenumber();
+		s += this.name + "$";
+		s += this.age + "$";
+		s += this.phonenumber;
 		return s;
 	}
 }
