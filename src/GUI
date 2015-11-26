@@ -17,6 +17,7 @@ public class GUI extends JFrame implements ActionListener {
 	private JMenuItem create;
 	private JMenuItem save;
 	private JMenuItem display;
+	private JMenuItem Import;
 	private JMenuItem add;
 	private JMenuItem edit;
 	private JMenuItem remove;
@@ -48,6 +49,11 @@ public class GUI extends JFrame implements ActionListener {
 		display.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
 				ActionEvent.ALT_MASK));
 		display.addActionListener(this);
+		
+		Import = new JMenuItem("Import Address Book", KeyEvent.VK_T);
+		Import.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
+		Import.addActionListener(this);
 
 		add = new JMenuItem("Add Buddy", KeyEvent.VK_T);
 		add.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
@@ -72,6 +78,7 @@ public class GUI extends JFrame implements ActionListener {
 		address.add(create);
 		address.add(save);
 		address.add(display);
+		address.add(Import);
 		buddy.add(add);
 		buddy.add(edit);
 		buddy.add(remove);
@@ -126,13 +133,28 @@ public class GUI extends JFrame implements ActionListener {
 				stream.setText("No Address book Created");
 			else
 				try {
-					A.export();
+					A.exportObject();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				field.setText("Address Book Saved");
 			stream.setText("");
+		}
+		
+		if (e.getSource() == Import) {
+			try {
+				A = new AddressBook();
+				this.GenerateJlist();
+				field.setText("New Address Book Created");
+				stream.setText("");
+				if (A.importObject() == false)
+					stream.setText("No Address book Created");
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		if (e.getSource() == add) {
